@@ -1,3 +1,4 @@
+// list all databases
 use admin;
 db.runCommand({ listDatabases: 1 });
 
