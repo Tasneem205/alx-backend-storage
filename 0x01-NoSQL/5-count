@@ -1,0 +1,3 @@
+// count 
+print(db.school.count());
+
