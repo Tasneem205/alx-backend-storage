@@ -1,0 +1,3 @@
+// list all databases
+db.school.find( { $regex: /^ALX/i } ).forEach(printjson);
+
