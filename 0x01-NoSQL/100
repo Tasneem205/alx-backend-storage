@@ -1,0 +1,3 @@
+// using regex
+db.school.find( { $regex: /^ALX/i } ).forEach(printjson);
+
