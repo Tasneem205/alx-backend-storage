@@ -5,5 +5,5 @@
 def insert_school(mongo_collection, **kwargs):
     """insert new collection function"""
     if not mongo_collection:
-        return None;
+        return None
     return result.inserted_id
