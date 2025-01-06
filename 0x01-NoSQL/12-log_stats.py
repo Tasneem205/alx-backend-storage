@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """ list all file """
+from pymongo import MongoClient
 
 
 def log_stats():
