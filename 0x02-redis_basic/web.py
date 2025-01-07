@@ -21,7 +21,7 @@ def track_url_access(method: Callable) -> Callable:
         if cached_page:
             return cached_page.decode("utf-8")
         response = method(url)
-        redis_client.setex(cache_key, 10, response)
+        redis_client.setex(cache_key, 10, html)
         return response
     return wrapper
 
