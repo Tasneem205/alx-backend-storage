@@ -18,7 +18,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable[bytes]] = None) ->
+    def get(self, key: str, fn: Optional[Callable] = None) ->
     Union[str, bytes, int, float, None]:
         """get key"""
         data = self._redis.get(key)
@@ -26,10 +26,10 @@ class Cache:
             return None
         return fn(data) if fn else data
 
-    def get_str(self, key: str) -> Optional[str]:
+    def get_str(self, key: str) -> str:
         """get value as result"""
         return self.get(key, fn=lambda d: d.decode("utf-8"))
 
-    def get_int(self, key: str) -> Optional[int]:
+    def get_int(self, key: str) -> int:
         """get value as result"""
         return self.get(key, fn=int)
