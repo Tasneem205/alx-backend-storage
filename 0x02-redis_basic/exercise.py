@@ -49,7 +49,7 @@ def count_calls(method: Callable) -> Callable:
 
 class Cache:
     """
-    cache class 
+    cache class
     """
     def __init__(self):
         """intializer"""
