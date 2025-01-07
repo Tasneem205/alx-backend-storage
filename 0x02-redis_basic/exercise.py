@@ -48,6 +48,9 @@ def count_calls(method: Callable) -> Callable:
 
 
 class Cache:
+    """
+    cache class 
+    """
     def __init__(self):
         """intializer"""
         self._redis = redis.Redis()
