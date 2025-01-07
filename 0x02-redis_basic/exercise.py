@@ -3,6 +3,7 @@
 
 import redis
 import uuid
+from typing import Union, Callable, Optional
 
 
 class Cache:
@@ -11,8 +12,24 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    def store(self, data):
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """save data in cache"""
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Optional[Callable] = None) ->
+    Union[str, bytes, int, float, None]:
+        """get key"""
+        data = self._redis.get(key)
+        if data is None:
+            return None
+        return fn(data) if fn else data
+
+    def get_str(self, key: str) -> Optional[str]:
+        """get value as result"""
+        return self.get(key, fn=lambda d: d.decode("utf-8"))
+
+    def get_int(self, key: str) -> Optional[int]:
+        """get value as result"""
+        return self.get(key, fn=int)
