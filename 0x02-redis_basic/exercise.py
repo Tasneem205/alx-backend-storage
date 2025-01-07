@@ -7,6 +7,19 @@ from functools import wraps
 from typing import Union, Callable, Optional
 
 
+def call_history(method: Callable) -> Callable:
+    """ call history """
+    @wraps(method)
+    def wrapper(self, *arg, **kwargs):
+        input_key = f"{method.__qualname__}:inputs"
+        output_key = f"{method.__qualname__}:outputs"
+        self._redis.rpush(input_key, str(args))
+        output = method(self, *args, **kwrags)
+        self._redis.rpush(output_key, str(output))
+        return output
+    return wrapper
+
+
 def count_calls(method: Callable) -> Callable:
     """ INCR function"""
     @wraps(method)
@@ -24,6 +37,7 @@ class Cache:
         self._redis.flushdb()
 
     @count_calls
+    @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """save data in cache"""
         key = str(uuid.uuid4())
