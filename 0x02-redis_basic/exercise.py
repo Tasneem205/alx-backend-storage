@@ -7,7 +7,7 @@ from functools import wraps
 from typing import Union, Callable, Optional
 
 
-def count_calls(method: Callable) -> Calllable:
+def count_calls(method: Callable) -> Callable:
     """ INCR function"""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
