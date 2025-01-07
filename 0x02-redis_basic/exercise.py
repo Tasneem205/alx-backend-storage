@@ -7,6 +7,22 @@ from functools import wraps
 from typing import Union, Callable, Optional
 
 
+def replay(method: Callable) -> None:
+    """ reply """
+    redis_instance = method.__self__._redis
+    inputs_key = f"{method.__qualname__}:inputs"
+    outputs_key = f"{method.__qualname__}:outputs"
+
+    inputs = redis_instance.lrange(inputs_key, 0, -1)
+    outputs = redis_instance.lrange(outputs_key, 0, -1)
+
+    call_count = len(inputs)
+    print(f"{method.__qualname__} was called {call_count} times:")
+    for input_args, output in zip(inputs, outputs):
+        print(f"{method.__qualname__}\
+              (*{input_args.decode('utf-8')}) -> {output.decode('utf-8')}")
+
+
 def call_history(method: Callable) -> Callable:
     """ call history """
     @wraps(method)
