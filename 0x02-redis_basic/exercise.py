@@ -19,8 +19,9 @@ def replay(method: Callable) -> None:
     call_count = len(inputs)
     print(f"{method.__qualname__} was called {call_count} times:")
     for input_args, output in zip(inputs, outputs):
-        print(f"{method.__qualname__}\
-              (*{input_args.decode('utf-8')}) -> {output.decode('utf-8')}")
+        decoded_input = input_args.decode('utf-8')  # Decode the input
+        decoded_output = output.decode('utf-8')    # Decode the output
+        print(f"{method.__qualname__}(*{decoded_input}) -> {decoded_output}")
 
 
 def call_history(method: Callable) -> Callable:
